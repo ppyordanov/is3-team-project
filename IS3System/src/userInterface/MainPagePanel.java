@@ -10,11 +10,22 @@ package userInterface;
  */
 public class MainPagePanel extends javax.swing.JPanel {
 
-    /**
+    public String paramx, paramy, country, continent;
+    
+    public MainPagePanel(String paramx, String paramy, String country, String continent){
+        this.paramx = paramx;
+        this.paramy = paramy;
+        this.country = country;
+        this.continent = continent;
+        initComponents();
+        
+    }
+    
+     /**
      * Creates new form MainPagePanel
      */
     public MainPagePanel() {
-        initComponents();
+        this("", "", "", "");
     }
 
     /**
@@ -292,4 +303,5 @@ public class MainPagePanel extends javax.swing.JPanel {
     private javax.swing.JComboBox yAxisOption;
     private javax.swing.JPanel yAxisPanel;
     // End of variables declaration//GEN-END:variables
+
 }
