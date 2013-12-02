@@ -44,14 +44,9 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="titleLabel" min="-2" pref="218" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="yAxisLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="yAxisOption" min="-2" pref="439" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <Component id="yAxisLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="yAxisOption" min="-2" pref="439" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
@@ -61,9 +56,37 @@
                       <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="backButton" min="-2" pref="101" max="-2" attributes="0"/>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="backButton" min="-2" pref="110" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="continentLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="countryLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="countryTextBox" max="32767" attributes="0"/>
+                                  <Component id="continentBox" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="clearButton" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
+                          <Component id="savePlotButton" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="titleLabel" min="-2" pref="218" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="287" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,19 +94,32 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="titleLabel" min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="yAxisOption" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="yAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="countryTextBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="countryLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="continentBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="continentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="clearButton" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="savePlotButton" min="-2" pref="40" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="backButton" min="-2" pref="43" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="titleLabel" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="yAxisOption" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="yAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="yAxisPanel" min="-2" pref="203" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -336,6 +372,47 @@
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Details:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="continentBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="5">
+            <StringItem index="0" value="Africa"/>
+            <StringItem index="1" value="America"/>
+            <StringItem index="2" value="Asia"/>
+            <StringItem index="3" value="Europe"/>
+            <StringItem index="4" value="Oceania/Australia"/>
+          </StringArray>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="continentLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Continent:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="countryTextBox">
+    </Component>
+    <Component class="javax.swing.JLabel" name="countryLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="11" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Country:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="clearButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Clear selections"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="savePlotButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Save scatter plot"/>
       </Properties>
     </Component>
   </SubComponents>

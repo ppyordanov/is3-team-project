@@ -5,6 +5,11 @@
 package userInterface;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -22,6 +27,15 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
      public void paintComponent(Graphics g){
         
         g.drawOval(30, 30, 30, 30);
+    }
+     
+    public void printInFile(){
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+        this.paint(g);
+        try { 
+            ImageIO.write(image, "png", new File(".//test.png"));
+        } catch (IOException e) {}
     }
     /**
      * This method is called from within the constructor to initialize the form.
