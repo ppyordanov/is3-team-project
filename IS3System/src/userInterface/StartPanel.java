@@ -4,9 +4,16 @@
  * and open the template in the editor.
  */
 
-package startpage;
+package userInterface;
 
-public class StartPage {
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class StartPanel {
 
 // P. Yordanov
 	/* BASIC STRUCTURE
@@ -26,8 +33,8 @@ public class StartPage {
    
     public ArrayList<String> keys = new ArrayList<String>();
     public String country;
-    public String param_1;
-    public String param_2;
+    public String param1;
+    public String param2;
    
     public HashMap <String, HashMap <String, String>> data = new HashMap <String, HashMap <String, String>>();
     public HashMap <String, String> item = new HashMap <String, String>();
@@ -71,7 +78,7 @@ public class StartPage {
         return param2;
     }
 
-    public String getCountry){
+    public String getCountry(){
         return country;
     }
     
