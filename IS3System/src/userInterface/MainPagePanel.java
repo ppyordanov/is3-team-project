@@ -11,7 +11,7 @@ import java.awt.Graphics;
  *
  * @author Samsung
  */
-public class MainPagePanel extends javax.swing.JPanel {
+public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
     public String paramx, paramy, country, continent;
     public ScatterPlotPanel scatterPlotPanel;
@@ -31,6 +31,8 @@ public class MainPagePanel extends javax.swing.JPanel {
         initComponents();
         drawScatterPlot();
         
+	xAxisOption.addActionListener(this);
+        yAxisOption.addActionListener(this);
     }
     
      /**
@@ -44,6 +46,15 @@ public class MainPagePanel extends javax.swing.JPanel {
       scatterPlotPanel.repaint();
     }
    
+    public void actionPerformed(ActionEvent e) {
+        JComboBox cb = (JComboBox)e.getSource();
+        String selectedItem = (String)cb.getSelectedItem();
+        
+        if( cb.equals(xAxisOption) )
+            this.paramx = selectedItem;
+        else
+            this.paramy = selectedItem;
+    }
 
 
     /**
