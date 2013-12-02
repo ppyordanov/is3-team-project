@@ -5,6 +5,8 @@
 package userInterface;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -12,17 +14,46 @@ import java.awt.Graphics;
  */
 public class ScatterPlotPanel extends javax.swing.JPanel {
 
+    
+    public HashMap<String, HashMap<String, ArrayList<String>>> csvData;
+    public String paramx, paramy, country, continent;
     /**
      * Creates new form ScatterPlotPanel
      */
     public ScatterPlotPanel() {
+        
         initComponents();
     }
 
      public void paintComponent(Graphics g){
         
-        g.drawOval(30, 30, 30, 30);
+        
     }
+     public void setParamx(String px){
+         paramx = px;
+     }
+     public void setParamy(String py){
+         paramy = py;
+     }
+     public void setCountry(String ctry){
+         country = ctry;
+     }
+     public void setContinent(String cntnt){
+         continent = cntnt;
+     }
+     
+     public String getParamx(){
+         return paramx;
+     }
+     public String getParamy(){
+         return paramy;
+     }
+     public String getCountry(){
+         return country;
+     }
+     public String getContinent(){
+         return continent;
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

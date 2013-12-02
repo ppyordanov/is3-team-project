@@ -41,6 +41,10 @@ public class MainPagePanel extends javax.swing.JPanel {
     }
     
     private void drawScatterPlot(){
+      scatterPlotPanel.setParamx(paramx);
+      scatterPlotPanel.setParamy(paramy);
+      scatterPlotPanel.setContinent(continent);
+      scatterPlotPanel.setCountry(country);
       scatterPlotPanel.repaint();
     }
    
