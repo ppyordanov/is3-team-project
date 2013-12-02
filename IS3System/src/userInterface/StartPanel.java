@@ -9,7 +9,17 @@ package startpage;
 public class StartPage {
 
 // P. Yordanov
- 
+	/* BASIC STRUCTURE
+	a hash map data to store everything from the imported .csv file
+	data <String, hash map item> = <K,V> will comprise of K - country V - attrubutes which will be easily accessible
+	item hash map <String, String> = <K,V> K - attribute names from 1st line of CSV file - V - their according values in the file -this should/ could be changed to double later
+	
+	getters:
+		param1 getter for main screen
+		param2 getter for main screen
+		chosen continents arraylist getter for main screen
+		String country getter for main scr.
+	*/
     public ArrayList<String> parameters = new ArrayList<String>();
     public ArrayList<String> continents = new ArrayList<String>();
    
