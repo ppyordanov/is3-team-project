@@ -358,21 +358,26 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
     private void maxY_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_maxY_SliderStateChanged
        if( maxY_Slider.getValue() <= minY_Slider.getValue() )
            maxY_Slider.setValue(minY_Slider.getValue());
+
+        scatterPlotPanel.setMaxSliderY(maxY_Slider.getValue());
     }//GEN-LAST:event_maxY_SliderStateChanged
 
     private void minY_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_minY_SliderStateChanged
        if( minY_Slider.getValue() >= maxY_Slider.getValue() )
            minY_Slider.setValue(maxY_Slider.getValue());
+       scatterPlotPanel.setMinSliderY(minY_Slider.getValue());
     }//GEN-LAST:event_minY_SliderStateChanged
 
     private void maxX_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_maxX_SliderStateChanged
         if( maxX_Slider.getValue() <= minX_Slider.getValue() )
             maxX_Slider.setValue(minX_Slider.getValue());
+        scatterPlotPanel.setMaxSliderX(maxX_Slider.getValue());
     }//GEN-LAST:event_maxX_SliderStateChanged
 
     private void minX_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_minX_SliderStateChanged
         if( minX_Slider.getValue() >= maxX_Slider.getValue() )
             minX_Slider.setValue(maxX_Slider.getValue());
+        scatterPlotPanel.setMinSliderX(minX_Slider.getValue());
     }//GEN-LAST:event_minX_SliderStateChanged
 
     private void xAxisOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xAxisOptionActionPerformed

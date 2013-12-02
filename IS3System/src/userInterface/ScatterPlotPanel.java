@@ -41,18 +41,23 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         HashMap<String, String> chinaValue = new HashMap<String, String>();
         chinaValue.put("team size", "233");
         chinaValue.put("medals", "47");
+        HashMap<String, String> USAValue = new HashMap<String, String>();
+        USAValue.put("team size", "200");
+        USAValue.put("medals", "43");
         csvData.put("China", chinaValue);
         csvData.put("Bulgaria", bulgariaValue);
+        csvData.put("USA", USAValue);
         
         initComponents();
     }
 
-     public void paintComponent(Graphics g){    
+     public void paintComponent(Graphics g){   
+         g.clearRect(0, 0, getSize().width, getSize().height);
          if(paramx.equals(""))
             paramx = "team size";
          if(paramy.equals(""))
             paramy = "medals";
-         System.out.println("paramx is " + paramx + " and paramy is " + paramy);
+         System.out.println("sliderxMax is  " + maxSliderx + " and slideryMax is " + maxSlidery);
          g.setColor(Color.green);
          double scalex = calculateScaleValue(paramx);
          double scaley = calculateScaleValue(paramy);
@@ -61,19 +66,24 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
              int xValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramx));
              int yValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramy));
              xValue*=scalex;
-             scaley*=scaley;
-             yValue = this.getSize().height - yValue;
+             yValue*=scaley;
+             yValue = getSize().height - yValue;
              yValue -=5; 
              boolean ok = false;
              for(Point p : selected){
+                 if(p.getX() > maxSliderx*3 || p.getX() < minSliderx*3 || p.getY() > maxSlidery*3 || p.getY() < minSlidery*3){
+                     g.setColor(Color.red);
+                 }
+                
                  if(p.getX() == xValue && p.getY() == yValue){
-                     if( p.getSelected() == 1 ){
-                         System.out.println("ok we are here!");
+                      System.out.println(p.getX()  + "   "  + p.getY());
+                     if( p.getSelected() == 1){
                          g.setColor(Color.red);  
                      }
                       ok = true; break;
                  }
              }
+          
              if(!ok)
                     selected.add(new Point(xValue, yValue));
     
@@ -97,12 +107,31 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
      }
      public void setParamx(String px){
          paramx = px;
+         this.repaint();
      }
      public void setParamy(String py){
          paramy = py;
+         this.repaint();
      }
      public void setCountry(String ctry){
          country = ctry;
+         this.repaint();
+     }
+     public void setMaxSliderX(int maxX){
+         maxSliderx = maxX;
+         this.repaint();
+     }
+     public void setMaxSliderY(int maxY){
+         maxSlidery = maxY;
+         this.repaint();
+     }
+     public void setMinSliderX(int minX){
+         minSliderx = minX;
+         this.repaint();
+     }
+     public void setMinSliderY(int minY){
+         minSlidery = minY;
+         this.repaint();
      }
 
     public void printInFile(){
@@ -195,15 +224,17 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         int evntX = evt.getX();
         int evntY = evt.getY();
         for(Point p : selected){
-            if(Math.abs(evntX - p.getX()) <= 5 && 
-               Math.abs(evntY - p.getY()) <= 5){
+            if(Math.abs(evntX - p.getX()) <= 7 && 
+               Math.abs(evntY - p.getY()) <= 7){
                 if(p.getSelected() == 0)
                     p.setSelected(1);
                 else
                     p.setSelected(0);
                 break;
             }
+           
         }
+         this.repaint();
         
     }//GEN-LAST:event_formMouseReleased
 
