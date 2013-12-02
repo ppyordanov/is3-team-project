@@ -4,6 +4,9 @@
  */
 package userInterface;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  *
  * @author Samsung
@@ -11,13 +14,21 @@ package userInterface;
 public class MainPagePanel extends javax.swing.JPanel {
 
     public String paramx, paramy, country, continent;
+    public ScatterPlotPanel scatterPlotPanel;
     
     public MainPagePanel(String paramx, String paramy, String country, String continent){
         this.paramx = paramx;
         this.paramy = paramy;
         this.country = country;
         this.continent = continent;
+        scatterPlotPanel = new ScatterPlotPanel();
+        scatterPlotPanel.setSize(200, 200);
+        scatterPlotPanel.setLocation(200, 200);
+        scatterPlotPanel.setVisible(true);
+
+        this.add(scatterPlotPanel);
         initComponents();
+        drawScatterPlot();
         
     }
     
@@ -27,6 +38,12 @@ public class MainPagePanel extends javax.swing.JPanel {
     public MainPagePanel() {
         this("", "", "", "");
     }
+    
+    private void drawScatterPlot(){
+      scatterPlotPanel.repaint();
+    }
+   
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +63,6 @@ public class MainPagePanel extends javax.swing.JPanel {
         yAxisPanel = new javax.swing.JPanel();
         maxY_Slider = new javax.swing.JSlider();
         minY_Slider = new javax.swing.JSlider();
-        scatterPlot = new javax.swing.JPanel();
         yAxisOption = new javax.swing.JComboBox();
         yAxisLabel = new javax.swing.JLabel();
         xAxisOption = new javax.swing.JComboBox();
@@ -140,17 +156,6 @@ public class MainPagePanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout scatterPlotLayout = new javax.swing.GroupLayout(scatterPlot);
-        scatterPlot.setLayout(scatterPlotLayout);
-        scatterPlotLayout.setHorizontalGroup(
-            scatterPlotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 488, Short.MAX_VALUE)
-        );
-        scatterPlotLayout.setVerticalGroup(
-            scatterPlotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout yAxisPanelLayout = new javax.swing.GroupLayout(yAxisPanel);
         yAxisPanel.setLayout(yAxisPanelLayout);
         yAxisPanelLayout.setHorizontalGroup(
@@ -160,19 +165,16 @@ public class MainPagePanel extends javax.swing.JPanel {
                 .addComponent(maxY_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(minY_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scatterPlot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(508, 508, 508))
         );
         yAxisPanelLayout.setVerticalGroup(
             yAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, yAxisPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(yAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scatterPlot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(yAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(minY_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(maxY_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(minY_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxY_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(122, 122, 122))
         );
 
         yAxisOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team size", "Bronze medals", "Silver medals", "Gold medals", "Population 2010", "GDP 2011", "Females 2012", "Males 2012", "Health_expenditure_public_pct_of_GDP", "Health_expenditure_public_pct_of_government_expenditure", "Medical_Doctors" }));
@@ -200,13 +202,12 @@ public class MainPagePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(xAxisLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(xAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(xAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -215,13 +216,19 @@ public class MainPagePanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(yAxisLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(yAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(yAxisLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(yAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(114, 114, 114)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -241,8 +248,8 @@ public class MainPagePanel extends javax.swing.JPanel {
                             .addComponent(yAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(yAxisLabel))
                         .addGap(18, 18, 18)
-                        .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(130, 130, 130)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(xAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(xAxisLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -289,7 +296,6 @@ public class MainPagePanel extends javax.swing.JPanel {
     private javax.swing.JSlider maxY_Slider;
     private javax.swing.JSlider minX_Slider;
     private javax.swing.JSlider minY_Slider;
-    private javax.swing.JPanel scatterPlot;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel xAxisLabel;
     private javax.swing.JComboBox xAxisOption;
