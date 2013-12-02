@@ -174,6 +174,7 @@ public class MainPagePanel extends javax.swing.JPanel {
         xAxisLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         xAxisLabel.setText("X axis:");
 
+        detailsArea.setEditable(false);
         detailsArea.setColumns(20);
         detailsArea.setRows(5);
         jScrollPane1.setViewportView(detailsArea);
@@ -210,7 +211,7 @@ public class MainPagePanel extends javax.swing.JPanel {
                                         .addComponent(detailsLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 201, Short.MAX_VALUE)))
+                        .addGap(0, 189, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
@@ -253,23 +254,23 @@ public class MainPagePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void maxY_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_maxY_SliderStateChanged
-       if( maxY_Slider.getValue() <= 50 )
-           maxY_Slider.setValue(50);
+       if( maxY_Slider.getValue() <= minY_Slider.getValue() )
+           maxY_Slider.setValue(minY_Slider.getValue());
     }//GEN-LAST:event_maxY_SliderStateChanged
 
     private void minY_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_minY_SliderStateChanged
-       if( minY_Slider.getValue() >= 50 )
-           minY_Slider.setValue(50);
+       if( minY_Slider.getValue() >= maxY_Slider.getValue() )
+           minY_Slider.setValue(maxY_Slider.getValue());
     }//GEN-LAST:event_minY_SliderStateChanged
 
     private void maxX_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_maxX_SliderStateChanged
-        if( maxX_Slider.getValue() <= 50 )
-            maxX_Slider.setValue(50);
+        if( maxX_Slider.getValue() <= minX_Slider.getValue() )
+            maxX_Slider.setValue(minX_Slider.getValue());
     }//GEN-LAST:event_maxX_SliderStateChanged
 
     private void minX_SliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_minX_SliderStateChanged
-        if( minX_Slider.getValue() >= 50 )
-            minX_Slider.setValue(50);
+        if( minX_Slider.getValue() >= maxX_Slider.getValue() )
+            minX_Slider.setValue(maxX_Slider.getValue());
     }//GEN-LAST:event_minX_SliderStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
