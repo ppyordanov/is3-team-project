@@ -17,6 +17,7 @@ public class StartPage {
 	getters:
 		param1 getter for main screen
 		param2 getter for main screen
+		chosen country getter
 		chosen continents arraylist getter for main screen
 		String country getter for main scr.
 	*/
@@ -57,6 +58,23 @@ public class StartPage {
         // get parameter values
        
         // getters and setters
+    }
+   
+   
+    public String getParam1(){
+        return param1;
+    }
+    
+    public String getParam2(){
+        return param2;
+    }
+
+    public String getCountry){
+        return country;
+    }
+    
+    public ArrayList<String> getContinents(){
+        return continents;
     }
    
     public HashMap<String, HashMap <String, String>> getData(){
