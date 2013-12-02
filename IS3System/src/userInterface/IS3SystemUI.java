@@ -17,11 +17,12 @@ public class IS3SystemUI extends javax.swing.JFrame {
         initComponents();
         
         MainPagePanel p = new MainPagePanel();
-        p.setBounds(0, 0, 200, 200);
+        p.setBounds(0, 0, (int)p.getPreferredSize().getWidth(), (int)p.getPreferredSize().getHeight());
+        p.setVisible(true);
         
         this.getContentPane().add(p);
         this.pack();
-        this.setVisible(true);
+        // The frame does not resize when using pack(). It should resize based on the preferredSize of MainPagePanel
     }
 
     /**
@@ -34,6 +35,9 @@ public class IS3SystemUI extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setMaximizedBounds(new java.awt.Rectangle(0, 0, 1000, 1000));
+        setPreferredSize(new java.awt.Dimension(600, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,7 +83,8 @@ public class IS3SystemUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new IS3SystemUI().setVisible(true);
+                IS3SystemUI theSystem = new IS3SystemUI();
+                theSystem.setVisible(true);
             }
         });
     }
