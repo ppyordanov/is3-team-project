@@ -58,6 +58,8 @@ public class StartPage {
         // get parameter values
        
         // getters and setters
+        
+        // the arrays/ array lists will be built into dropdown menus
     }
    
    
