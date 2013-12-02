@@ -21,6 +21,7 @@ public class MainPagePanel extends javax.swing.JPanel {
         this.paramy = paramy;
         this.country = country;
         this.continent = continent;
+        //creating new scatterPlotPanel
         scatterPlotPanel = new ScatterPlotPanel();
         scatterPlotPanel.setSize(200, 200);
         scatterPlotPanel.setLocation(200, 200);
