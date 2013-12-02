@@ -57,7 +57,7 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
             paramx = "team size";
          if(paramy.equals(""))
             paramy = "medals";
-         System.out.println("sliderxMax is  " + maxSliderx + " and slideryMax is " + maxSlidery);
+         System.out.println("miny  " + minSlidery + " and maxy " + maxSlidery);
          g.setColor(Color.green);
          double scalex = calculateScaleValue(paramx);
          double scaley = calculateScaleValue(paramy);
@@ -70,25 +70,27 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
              yValue = getSize().height - yValue;
              yValue -=5; 
              boolean ok = false;
-             for(Point p : selected){
-                 if(p.getX() > maxSliderx*3 || p.getX() < minSliderx*3 || p.getY() > maxSlidery*3 || p.getY() < minSlidery*3){
+             g.setColor(Color.green);
+             if(xValue > maxSliderx*3 || xValue < minSliderx*3 || yValue <getSize().height - maxSlidery*3 || yValue > getSize().width- minSlidery*3){
                      g.setColor(Color.red);
-                 }
-                
-                 if(p.getX() == xValue && p.getY() == yValue){
-                      System.out.println(p.getX()  + "   "  + p.getY());
-                     if( p.getSelected() == 1){
-                         g.setColor(Color.red);  
-                     }
-                      ok = true; break;
-                 }
-             }
-          
+                }
+             else
+                for(Point p : selected){
+
+                  if(p.getX() == xValue && p.getY() == yValue){
+                        System.out.println(p.getX()  + "   "  + p.getY());
+                       if( p.getSelected() == 1){
+                            g.setColor(Color.red);  
+                       }
+                        ok = true; break;
+                  }
+                }
+             
              if(!ok)
                     selected.add(new Point(xValue, yValue));
     
              g.fillOval(xValue, yValue, 5, 5);
-             g.setColor(Color.green);
+           
              
          }
 
