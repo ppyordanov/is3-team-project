@@ -42,7 +42,7 @@ public class StartPage {
             int i = 1;
             String line = fScan.nextLine();
             Scanner lScan = new Scanner(line);
-			lScan.useDelimiter(";");
+            lScan.useDelimiter(";");
             item = new HashMap <String, String>();
             c = lScan.next();
             while(lScan.hasNext()){
