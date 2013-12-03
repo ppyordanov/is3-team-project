@@ -32,6 +32,7 @@ public class StartJPanel extends javax.swing.JPanel {
         Scanner fScan = new Scanner(reader);
         keys = new  ArrayList<String> (Arrays.asList(fScan.nextLine().split("\\;")));
         String c;
+        System.out.println(keys.toString());
         while(fScan.hasNextLine()){
             int i = 1;
             String line = fScan.nextLine();
@@ -44,19 +45,34 @@ public class StartJPanel extends javax.swing.JPanel {
                 item.put(keys.get(i), value);
                 i++;
             }
-           
+            
+            System.out.println(item.toString());
             data.put(c, item);
         }
+        
+        //System.out.println(data.get("Bulgaria").get("Health_expenditure_public_pct_of_government_expenditure") + ">>>>>>>>>>>>>>>>>>");
     }
     public void putData(){
         Object [] theCountries = data.keySet().toArray();
+        Arrays.sort(theCountries);
         for( Object o: theCountries )
             jComboBox3.addItem(o);
     }
+    
+    public void putParams(){
+        Object [] parameters = keys.toArray(new String[keys.size()]);
+        Arrays.sort(parameters);
+        for(Object param: parameters){
+            jComboBox1.addItem(param);
+            jComboBox2.addItem(param);
+        }
+    }
+    
     public StartJPanel() throws FileNotFoundException {
         initComponents();
         accessFile();
         putData();
+        putParams();
     }
 
     /**
@@ -114,12 +130,10 @@ public class StartJPanel extends javax.swing.JPanel {
         jLabel5.setBounds(360, 270, 190, 50);
 
         jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---", "Gold Medals", "Silver Medals", "Bronze Medals", "TeamSize", "Males2012", "Females2012", "NOC", "Pop2012", "GDP2011", "ISO", "Pop.Median age", "Healthy life expectancy at birth (years) both sexes", "Health expenditure public pct of GDP", "Medical_Doctors" }));
         add(jComboBox1);
         jComboBox1.setBounds(120, 340, 190, 30);
 
         jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "---", "Gold Medals", "Silver Medals", "Bronze Medals", "TeamSize", "Males2012", "Females2012", "NOC", "Pop2012", "GDP2011", "ISO", "Pop.Median age", "Healthy life expectancy at birth (years) both sexes", "Health expenditure public pct of GDP", "Medical_Doctors" }));
         add(jComboBox2);
         jComboBox2.setBounds(360, 340, 190, 30);
 

@@ -99,23 +99,7 @@
           <Font name="SansSerif" size="16" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="15">
-            <StringItem index="0" value="---"/>
-            <StringItem index="1" value="Gold Medals"/>
-            <StringItem index="2" value="Silver Medals"/>
-            <StringItem index="3" value="Bronze Medals"/>
-            <StringItem index="4" value="TeamSize"/>
-            <StringItem index="5" value="Males2012"/>
-            <StringItem index="6" value="Females2012"/>
-            <StringItem index="7" value="NOC"/>
-            <StringItem index="8" value="Pop2012"/>
-            <StringItem index="9" value="GDP2011"/>
-            <StringItem index="10" value="ISO"/>
-            <StringItem index="11" value="Pop.Median age"/>
-            <StringItem index="12" value="Healthy life expectancy at birth (years) both sexes"/>
-            <StringItem index="13" value="Health expenditure public pct of GDP"/>
-            <StringItem index="14" value="Medical_Doctors"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <Constraints>
@@ -130,23 +114,7 @@
           <Font name="SansSerif" size="16" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="15">
-            <StringItem index="0" value="---"/>
-            <StringItem index="1" value="Gold Medals"/>
-            <StringItem index="2" value="Silver Medals"/>
-            <StringItem index="3" value="Bronze Medals"/>
-            <StringItem index="4" value="TeamSize"/>
-            <StringItem index="5" value="Males2012"/>
-            <StringItem index="6" value="Females2012"/>
-            <StringItem index="7" value="NOC"/>
-            <StringItem index="8" value="Pop2012"/>
-            <StringItem index="9" value="GDP2011"/>
-            <StringItem index="10" value="ISO"/>
-            <StringItem index="11" value="Pop.Median age"/>
-            <StringItem index="12" value="Healthy life expectancy at birth (years) both sexes"/>
-            <StringItem index="13" value="Health expenditure public pct of GDP"/>
-            <StringItem index="14" value="Medical_Doctors"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <Constraints>
