@@ -20,6 +20,8 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
     public ScatterPlotPanel scatterPlotPanel;
     
     public MainPagePanel(String paramx, String paramy, String country, String continent){
+        initComponents();
+        
         this.paramx = paramx;
         this.paramy = paramy;
         this.country = country;
@@ -31,13 +33,13 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         scatterPlotPanel.setVisible(true);
 
         this.add(scatterPlotPanel);
-        initComponents();
         drawScatterPlot();
         
 	xAxisOption.addActionListener(this);
         yAxisOption.addActionListener(this);
         continentBox.addActionListener(this);
         savePlotButton.addActionListener(this);
+        clearButton.addActionListener(this);
     }
     
      /**
@@ -55,10 +57,21 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
       scatterPlotPanel.updateUI();
     }
    
+    @Override
     public void actionPerformed(ActionEvent e) {
         
         if( e.getSource().equals(savePlotButton) ){
-            scatterPlotPanel.printInFile();
+            boolean isPrinted = scatterPlotPanel.printInFile(this.paramx, this.paramy);
+            
+            if(isPrinted)
+                printDoneLabel.setText("Exported plot successfully");
+        }
+        else if(e.getSource().equals(clearButton)){
+            minX_Slider.setValue(0);
+            minY_Slider.setValue(0);
+            maxX_Slider.setValue(0);
+            maxY_Slider.setValue(0);
+            scatterPlotPanel.updateUI();
         }
         else{
             JComboBox cb = (JComboBox)e.getSource();
@@ -98,6 +111,8 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         xAxisPanel = new javax.swing.JPanel();
         minX_Slider = new javax.swing.JSlider();
         maxX_Slider = new javax.swing.JSlider();
+        minLabelX = new javax.swing.JLabel();
+        maxLabelX = new javax.swing.JLabel();
         yAxisPanel = new javax.swing.JPanel();
         maxY_Slider = new javax.swing.JSlider();
         minY_Slider = new javax.swing.JSlider();
@@ -114,6 +129,9 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         countryLabel = new javax.swing.JLabel();
         clearButton = new javax.swing.JButton();
         savePlotButton = new javax.swing.JButton();
+        printDoneLabel = new javax.swing.JLabel();
+        minLabelY = new javax.swing.JLabel();
+        maxLabelY = new javax.swing.JLabel();
 
         setAutoscrolls(true);
 
@@ -132,7 +150,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         minX_Slider.setPaintLabels(true);
         minX_Slider.setPaintTicks(true);
         minX_Slider.setSnapToTicks(true);
-        minX_Slider.setValue(30);
+        minX_Slider.setValue(0);
         minX_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 minX_SliderStateChanged(evt);
@@ -145,30 +163,44 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         maxX_Slider.setPaintLabels(true);
         maxX_Slider.setPaintTicks(true);
         maxX_Slider.setSnapToTicks(true);
-        maxX_Slider.setValue(80);
+        maxX_Slider.setValue(0);
         maxX_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 maxX_SliderStateChanged(evt);
             }
         });
 
+        minLabelX.setText("Min");
+
+        maxLabelX.setText("Max");
+
         javax.swing.GroupLayout xAxisPanelLayout = new javax.swing.GroupLayout(xAxisPanel);
         xAxisPanel.setLayout(xAxisPanelLayout);
         xAxisPanelLayout.setHorizontalGroup(
             xAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(xAxisPanelLayout.createSequentialGroup()
-                .addGap(0, 20, Short.MAX_VALUE)
+                .addGap(0, 10, Short.MAX_VALUE)
                 .addGroup(xAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(maxX_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(minX_Slider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, xAxisPanelLayout.createSequentialGroup()
+                        .addComponent(maxLabelX)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(maxX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, xAxisPanelLayout.createSequentialGroup()
+                        .addComponent(minLabelX)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(minX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         xAxisPanelLayout.setVerticalGroup(
             xAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, xAxisPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(maxX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(xAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(maxX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxLabelX))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(minX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 42, Short.MAX_VALUE))
+                .addGroup(xAxisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(minX_Slider, javax.swing.GroupLayout.PREFERRED_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(minLabelX)))
         );
 
         maxY_Slider.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -179,7 +211,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         maxY_Slider.setPaintLabels(true);
         maxY_Slider.setPaintTicks(true);
         maxY_Slider.setToolTipText("");
-        maxY_Slider.setValue(80);
+        maxY_Slider.setValue(0);
         maxY_Slider.setName(""); // NOI18N
         maxY_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -193,7 +225,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         minY_Slider.setOrientation(javax.swing.JSlider.VERTICAL);
         minY_Slider.setPaintLabels(true);
         minY_Slider.setPaintTicks(true);
-        minY_Slider.setValue(30);
+        minY_Slider.setValue(0);
         minY_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 minY_SliderStateChanged(evt);
@@ -226,7 +258,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         yAxisLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         yAxisLabel.setText("Y axis:");
 
-        xAxisOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Team size", "Bronze medals", "Silver medals", "Gold medals", "Population 2010", "GDP 2011", "Females 2012", "Males 2012", "Health_expenditure_public_pct_of_GDP", "Health_expenditure_public_pct_of_government_expenditure", "Medical_Doctors" }));
+        xAxisOption.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bronze medals", "Team size", "Silver medals", "Gold medals", "Population 2010", "GDP 2011", "Females 2012", "Males 2012", "Health_expenditure_public_pct_of_GDP", "Health_expenditure_public_pct_of_government_expenditure", "Medical_Doctors" }));
         xAxisOption.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 xAxisOptionActionPerformed(evt);
@@ -256,12 +288,30 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
         savePlotButton.setText("Save scatter plot");
 
+        printDoneLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        printDoneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        minLabelY.setText("Min");
+
+        maxLabelY.setText("Max");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(yAxisLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(yAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(114, 114, 114))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -275,18 +325,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
                                     .addComponent(detailsLabel)
                                     .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(yAxisLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(yAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(114, 114, 114)))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -304,12 +343,19 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
                                     .addComponent(countryTextBox)
                                     .addComponent(continentBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(clearButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(savePlotButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(savePlotButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(printDoneLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(287, 287, 287))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(maxLabelY)
+                .addGap(31, 31, 31)
+                .addComponent(minLabelY, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,11 +380,17 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
                         .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(savePlotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(printDoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(yAxisPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(130, 130, 130)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(minLabelY)
+                            .addComponent(maxLabelY))
+                        .addGap(110, 110, 110)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(xAxisOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(xAxisLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -395,10 +447,15 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
     private javax.swing.JLabel detailsLabel;
     private javax.swing.JButton helpButton;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel maxLabelX;
+    private javax.swing.JLabel maxLabelY;
     private javax.swing.JSlider maxX_Slider;
     private javax.swing.JSlider maxY_Slider;
+    private javax.swing.JLabel minLabelX;
+    private javax.swing.JLabel minLabelY;
     private javax.swing.JSlider minX_Slider;
     private javax.swing.JSlider minY_Slider;
+    private javax.swing.JLabel printDoneLabel;
     private javax.swing.JButton savePlotButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel xAxisLabel;

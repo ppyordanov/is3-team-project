@@ -29,11 +29,14 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
      * Creates new form ScatterPlotPanel
      */
     public ScatterPlotPanel() {
+        initComponents();
+        
         selected = new ArrayList<Point>();
-        maxSliderx = 100;
-        maxSlidery = 100;
+        maxSliderx = 0;
+        maxSlidery = 0;
         minSliderx = 0;
         minSlidery = 0;
+        
         csvData = new HashMap<String, HashMap<String, String>>();
         HashMap<String, String> bulgariaValue = new HashMap<String, String>();
         bulgariaValue.put("team size", "30");
@@ -47,8 +50,6 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         csvData.put("China", chinaValue);
         csvData.put("Bulgaria", bulgariaValue);
         csvData.put("USA", USAValue);
-        
-        initComponents();
     }
 
      public void paintComponent(Graphics g){   
@@ -136,13 +137,20 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
          this.repaint();
      }
 
-    public void printInFile(){
+    public boolean printInFile(String xAxis, String yAxis){
+        plotInfoLabel.setText("Olympics statistics, X axis: " + xAxis + ", Y axis: " + yAxis);
+        
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
         this.paint(g);
+        
         try { 
             ImageIO.write(image, "png", new File(".//test.png"));
-        } catch (IOException e) {}
+        } catch (IOException e) { return false; }
+        
+        plotInfoLabel.setText("");
+        
+        return true;
      }
      public void setContinent(String cntnt){
          continent = cntnt;
@@ -203,22 +211,35 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        plotInfoLabel = new javax.swing.JLabel();
+
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        setForeground(new java.awt.Color(204, 204, 255));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 formMouseReleased(evt);
             }
         });
 
+        plotInfoLabel.setBackground(new java.awt.Color(255, 255, 255));
+        plotInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        plotInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(plotInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(plotInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -241,5 +262,6 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel plotInfoLabel;
     // End of variables declaration//GEN-END:variables
 }
