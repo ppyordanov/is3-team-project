@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  * @author CeCeSOTI
  */
 public class StartJPanel extends javax.swing.JPanel {
+    
     public static ArrayList<String> keys = new ArrayList<String>();
     public HashMap <String, HashMap <String, String>> data = new HashMap <String, HashMap <String, String>>();
     public HashMap <String, String> item = new HashMap <String, String>();
@@ -130,10 +131,20 @@ public class StartJPanel extends javax.swing.JPanel {
         jLabel5.setBounds(360, 270, 190, 50);
 
         jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
         add(jComboBox1);
         jComboBox1.setBounds(120, 340, 190, 30);
 
         jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
         add(jComboBox2);
         jComboBox2.setBounds(360, 340, 190, 30);
 
@@ -164,6 +175,14 @@ public class StartJPanel extends javax.swing.JPanel {
         add(jLabel1);
         jLabel1.setBounds(-6, -6, 690, 540);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     public void main(String args[]) throws FileNotFoundException {
         /* Set the Nimbus look and feel */
