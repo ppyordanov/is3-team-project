@@ -4,11 +4,13 @@
  */
 package userInterface;
 
+import helppage.HelpPage1;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 /**
  *
@@ -16,8 +18,9 @@ import javax.swing.JComboBox;
  */
 public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
-    public String paramx, paramy, country, continent;
-    public ScatterPlotPanel scatterPlotPanel;
+    private IS3SystemUI parent;
+    private String paramx, paramy, country, continent;
+    private ScatterPlotPanel scatterPlotPanel;
     
     public MainPagePanel(String paramx, String paramy, String country, String continent){
         initComponents();
@@ -40,13 +43,15 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         continentBox.addActionListener(this);
         savePlotButton.addActionListener(this);
         clearButton.addActionListener(this);
+        helpButton.addActionListener(this);
     }
     
      /**
      * Creates new form MainPagePanel
      */
-    public MainPagePanel() {
+    public MainPagePanel(IS3SystemUI myParent) {
         this("", "", "", "");
+        this.parent = myParent;
     }
     
     private void drawScatterPlot(){
@@ -72,6 +77,20 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
             maxX_Slider.setValue(0);
             maxY_Slider.setValue(0);
             scatterPlotPanel.updateUI();
+        }
+        else if(e.getSource().equals(helpButton)){
+            HelpPage1 h = new HelpPage1();
+            h.setBounds(0, 0, (int)h.getPreferredSize().getWidth(), (int)h.getPreferredSize().getHeight());
+            h.setVisible(true);
+            
+            parent.getContentPane().removeAll();
+            parent.validate();
+            parent.repaint();
+            
+            parent.getContentPane().add(h);
+            parent.pack();
+            parent.validate();
+            parent.repaint();
         }
         else{
             JComboBox cb = (JComboBox)e.getSource();

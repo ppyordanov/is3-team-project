@@ -4,19 +4,21 @@
  */
 package userInterface;
 
+import helppage.HelpPage;
+import helppage.HelpPage1;
+
 /**
  *
  * @author Samsung
  */
 public class IS3SystemUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IS3SystemUI
-     */
+    private MainPagePanel p;
+    
     public IS3SystemUI() {
         initComponents();
         
-        MainPagePanel p = new MainPagePanel();
+        p = new MainPagePanel(this);
         p.setBounds(0, 0, (int)p.getPreferredSize().getWidth(), (int)p.getPreferredSize().getHeight());
         p.setVisible(true);
         
@@ -25,6 +27,7 @@ public class IS3SystemUI extends javax.swing.JFrame {
         // The frame does not resize when using pack(). It should resize based on the preferredSize of MainPagePanel
     }
 
+    public MainPagePanel getMainPagePanel(){ return p; }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
