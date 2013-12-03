@@ -85,18 +85,22 @@ public class StartJPanel extends javax.swing.JPanel {
         this.parent = parent;
     }
 	
+	//get data
     public HashMap <String, HashMap <String, String>> getData(){
         return data;
     }
     
+	//get parameter 1 as a string
     public String getParam1(){
         return param1;
     }
     
+	//get parameter 2 as a string
     public String getParam2(){
         return param2;
     }
 
+	//get country as a string
     public String getCountry(){
         return country;
     }
