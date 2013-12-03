@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import userInterface.IS3SystemUI;
+import userInterface.MainPagePanel;
 
 /**
  *
@@ -21,15 +23,17 @@ import java.util.logging.Logger;
  */
 public class StartJPanel extends javax.swing.JPanel {
     
-    public static ArrayList<String> keys = new ArrayList<String>();
-    public HashMap <String, HashMap <String, String>> data = new HashMap <String, HashMap <String, String>>();
-    public HashMap <String, String> item = new HashMap <String, String>();
+    private static ArrayList<String> keys = new ArrayList<String>();
+    private HashMap <String, HashMap <String, String>> data = new HashMap <String, HashMap <String, String>>();
+    private HashMap <String, String> item = new HashMap <String, String>();
+    
+    private IS3SystemUI parent;
 
     /**
      * Creates new form StartJPanel
      */
     public void accessFile() throws FileNotFoundException{
-        FileReader reader = new FileReader("C:\\Users\\CeCeSOTI\\Documents\\NetBeansProjects\\StartPage\\src\\my\\startPageUI\\WHO-data.csv");
+        FileReader reader = new FileReader(".\\WHO-data.csv");
         Scanner fScan = new Scanner(reader);
         keys = new  ArrayList<String> (Arrays.asList(fScan.nextLine().split("\\;")));
         String c;
@@ -69,11 +73,12 @@ public class StartJPanel extends javax.swing.JPanel {
         }
     }
     
-    public StartJPanel() throws FileNotFoundException {
+    public StartJPanel(IS3SystemUI parent) throws FileNotFoundException {
         initComponents();
         accessFile();
         putData();
         putParams();
+        this.parent = parent;
     }
 
     /**
@@ -131,20 +136,10 @@ public class StartJPanel extends javax.swing.JPanel {
         jLabel5.setBounds(360, 270, 190, 50);
 
         jComboBox1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox1ItemStateChanged(evt);
-            }
-        });
         add(jComboBox1);
         jComboBox1.setBounds(120, 340, 190, 30);
 
         jComboBox2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBox2ItemStateChanged(evt);
-            }
-        });
         add(jComboBox2);
         jComboBox2.setBounds(360, 340, 190, 30);
 
@@ -167,6 +162,11 @@ public class StartJPanel extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jButton2.setText("Main page");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         add(jButton2);
         jButton2.setBounds(543, 473, 120, 40);
 
@@ -184,42 +184,21 @@ public class StartJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
-    public void main(String args[]) throws FileNotFoundException {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StartJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StartJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StartJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StartJPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new StartJPanel().setVisible(true);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(StartJPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MainPagePanel p = new MainPagePanel(parent);
+        p.setBounds(0, 0, (int)p.getPreferredSize().getWidth(), (int)p.getPreferredSize().getHeight());
+        p.setVisible(true);
         
-    }
+        parent.getContentPane().removeAll();
+        parent.validate();
+        parent.repaint();
+            
+        parent.getContentPane().add(p);
+        parent.pack();
+        parent.validate();
+        parent.repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

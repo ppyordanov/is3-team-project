@@ -21,12 +21,12 @@ public class TestFrame extends javax.swing.JFrame {
      */
     public TestFrame() throws FileNotFoundException {
         initComponents();
-        StartJPanel s = new StartJPanel();
+        /*StartJPanel s = new StartJPanel();
         
         s.setBounds(0, 0, (int)s.getPreferredSize().getWidth(), (int)s.getPreferredSize().getHeight());
         s.setVisible(true);
         this.getContentPane().add(s);
-        this.pack();
+        this.pack();*/
     }
 
     /**

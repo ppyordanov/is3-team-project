@@ -4,7 +4,7 @@
  */
 package userInterface;
 
-import helppage.HelpPage1;
+import helppage.HelpPage;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -79,7 +79,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
             scatterPlotPanel.updateUI();
         }
         else if(e.getSource().equals(helpButton)){
-            HelpPage1 h = new HelpPage1();
+            HelpPage h = new HelpPage();
             h.setBounds(0, 0, (int)h.getPreferredSize().getWidth(), (int)h.getPreferredSize().getHeight());
             h.setVisible(true);
             

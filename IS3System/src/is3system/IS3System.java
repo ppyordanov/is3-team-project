@@ -4,6 +4,7 @@
  */
 package is3system;
 
+import java.io.FileNotFoundException;
 import userInterface.IS3SystemUI;
 
 /**
@@ -15,7 +16,7 @@ public class IS3System {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         IS3SystemUI theUI = new IS3SystemUI();
         theUI.setVisible(true);
     }

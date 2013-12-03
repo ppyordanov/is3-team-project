@@ -5,7 +5,11 @@
 package userInterface;
 
 import helppage.HelpPage;
-import helppage.HelpPage1;
+import helppage.HelpPage;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import startJpanelUI.StartJPanel;
 
 /**
  *
@@ -13,21 +17,20 @@ import helppage.HelpPage1;
  */
 public class IS3SystemUI extends javax.swing.JFrame {
 
-    private MainPagePanel p;
+    private StartJPanel sp;
     
-    public IS3SystemUI() {
+    public IS3SystemUI() throws FileNotFoundException {
         initComponents();
         
-        p = new MainPagePanel(this);
-        p.setBounds(0, 0, (int)p.getPreferredSize().getWidth(), (int)p.getPreferredSize().getHeight());
-        p.setVisible(true);
+        sp = new StartJPanel(this);
+        sp.setBounds(0, 0, (int)sp.getPreferredSize().getWidth(), (int)sp.getPreferredSize().getHeight());
+        sp.setVisible(true);
         
-        this.getContentPane().add(p);
+        this.getContentPane().add(sp);
         this.pack();
         // The frame does not resize when using pack(). It should resize based on the preferredSize of MainPagePanel
     }
 
-    public MainPagePanel getMainPagePanel(){ return p; }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,9 +78,14 @@ public class IS3SystemUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                IS3SystemUI theSystem = new IS3SystemUI();
-                theSystem.setVisible(true);
-            }
+                IS3SystemUI theSystem;
+                try {
+                    theSystem = new IS3SystemUI();
+                    theSystem.setVisible(true);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(IS3SystemUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }// end of run
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
