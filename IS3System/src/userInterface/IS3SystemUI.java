@@ -43,6 +43,7 @@ public class IS3SystemUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 1000, 1000));
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         pack();

@@ -6,14 +6,17 @@
 
 package startJpanelUI;
 
+import helppage.HelpPage;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JPanel;
 import userInterface.IS3SystemUI;
 import userInterface.MainPagePanel;
 
@@ -28,6 +31,7 @@ public class StartJPanel extends javax.swing.JPanel {
     private HashMap <String, String> item = new HashMap <String, String>();
     
     private IS3SystemUI parent;
+    private JPanel previous;
 
     /**
      * Creates new form StartJPanel
@@ -37,7 +41,7 @@ public class StartJPanel extends javax.swing.JPanel {
         Scanner fScan = new Scanner(reader);
         keys = new  ArrayList<String> (Arrays.asList(fScan.nextLine().split("\\;")));
         String c;
-        System.out.println(keys.toString());
+        //System.out.println(keys.toString());
         while(fScan.hasNextLine()){
             int i = 1;
             String line = fScan.nextLine();
@@ -51,7 +55,7 @@ public class StartJPanel extends javax.swing.JPanel {
                 i++;
             }
             
-            System.out.println(item.toString());
+            //System.out.println(item.toString());
             data.put(c, item);
         }
         
@@ -120,17 +124,17 @@ public class StartJPanel extends javax.swing.JPanel {
         jLabel3.setBounds(220, 20, 240, 40);
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("First Parameter:");
+        jLabel4.setText("First Parameter (X axis):");
         jLabel4.setOpaque(true);
         add(jLabel4);
         jLabel4.setBounds(120, 270, 190, 50);
 
         jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Second Parameter:");
+        jLabel5.setText("Second Parameter (Y axis):");
         jLabel5.setOpaque(true);
         add(jLabel5);
         jLabel5.setBounds(360, 270, 190, 50);
@@ -155,12 +159,17 @@ public class StartJPanel extends javax.swing.JPanel {
         add(jComboBox3);
         jComboBox3.setBounds(250, 460, 170, 40);
 
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jButton1.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         jButton1.setText("Help");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1);
         jButton1.setBounds(20, 473, 110, 40);
 
-        jButton2.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        jButton2.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         jButton2.setText("Main page");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +194,16 @@ public class StartJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox2ItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MainPagePanel p = new MainPagePanel(parent);
+        String paramx = jComboBox1.getSelectedItem().toString();
+        String paramy = jComboBox2.getSelectedItem().toString();
+        String country = jComboBox3.getSelectedItem().toString();
+        
+        MainPagePanel p = null;
+        try {
+            p = new MainPagePanel(parent, this, paramx, paramy, country, data);
+        } catch (IOException ex) {
+            Logger.getLogger(StartJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         p.setBounds(0, 0, (int)p.getPreferredSize().getWidth(), (int)p.getPreferredSize().getHeight());
         p.setVisible(true);
         
@@ -198,6 +216,26 @@ public class StartJPanel extends javax.swing.JPanel {
         parent.validate();
         parent.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        HelpPage h = null;
+        try {
+            h = new HelpPage(parent, this);
+        } catch (IOException ex) {
+            Logger.getLogger(StartJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        h.setBounds(0, 0, (int)h.getPreferredSize().getWidth(), (int)h.getPreferredSize().getHeight());
+        h.setVisible(true);
+        
+        parent.getContentPane().removeAll();
+        parent.validate();
+        parent.repaint();
+            
+        parent.getContentPane().add(h);
+        parent.pack();
+        parent.validate();
+        parent.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -28,17 +28,20 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
     /**
      * Creates new form ScatterPlotPanel
      */
-    public ScatterPlotPanel() {
+    public ScatterPlotPanel(String px, String py, String country, HashMap<String, HashMap<String, String>> data) {
         initComponents();
         
         selected = new ArrayList<Point>();
+        paramx = px;
+        paramy = py;
+        this.country = country;
         maxSliderx = 0;
         maxSlidery = 0;
         minSliderx = 0;
         minSlidery = 0;
         
-        csvData = new HashMap<String, HashMap<String, String>>();
-        HashMap<String, String> bulgariaValue = new HashMap<String, String>();
+        csvData = data;
+        /*HashMap<String, String> bulgariaValue = new HashMap<String, String>();
         bulgariaValue.put("team size", "30");
         bulgariaValue.put("medals", "3");
         HashMap<String, String> chinaValue = new HashMap<String, String>();
@@ -49,23 +52,30 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         USAValue.put("medals", "43");
         csvData.put("China", chinaValue);
         csvData.put("Bulgaria", bulgariaValue);
-        csvData.put("USA", USAValue);
+        csvData.put("USA", USAValue);*/
     }
 
      public void paintComponent(Graphics g){   
          g.clearRect(0, 0, getSize().width, getSize().height);
          if(paramx.equals(""))
-            paramx = "team size";
+            paramx = "TeamSize";
          if(paramy.equals(""))
-            paramy = "medals";
+            paramy = "Bronze";
          System.out.println("miny  " + minSlidery + " and maxy " + maxSlidery);
          g.setColor(Color.green);
          double scalex = calculateScaleValue(paramx);
          double scaley = calculateScaleValue(paramy);
          for(Entry csvEntry : csvData.entrySet()){
- 
-             int xValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramx));
-             int yValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramy));
+             String tempX = ((HashMap<String,String>)csvEntry.getValue()).get(paramx);
+             String tempY = ((HashMap<String,String>)csvEntry.getValue()).get(paramy);
+             int xValue = 0;
+             int yValue = 0;
+             
+             if( !tempX.equals("") )
+                xValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramx));
+             if( !tempY.equals("") )
+                yValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramy));
+
              xValue*=scalex;
              yValue*=scaley;
              yValue = getSize().height - yValue;
@@ -102,7 +112,9 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
          int paramSum = 0;
          int size = 0;
         for(Entry csvEntry : csvData.entrySet()){
-            paramSum += Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(param));
+            String temp = ((HashMap<String,String>)csvEntry.getValue()).get(param);
+            if( !temp.equals("") )
+                paramSum += Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(param));
             size++;
         }
         scale = (double) (getSize().height/2) / (paramSum / size) ;
