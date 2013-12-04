@@ -25,7 +25,12 @@ import userInterface.MainPagePanel;
  * @author CeCeSOTI
  */
 public class StartJPanel extends javax.swing.JPanel {
-    
+
+    private String param1;
+    private String param2;
+    private String country;
+	
+	
     private static ArrayList<String> keys = new ArrayList<String>();
     private HashMap <String, HashMap <String, String>> data = new HashMap <String, HashMap <String, String>>();
     private HashMap <String, String> item = new HashMap <String, String>();
@@ -59,7 +64,6 @@ public class StartJPanel extends javax.swing.JPanel {
             data.put(c, item);
         }
         
-        //System.out.println(data.get("Bulgaria").get("Health_expenditure_public_pct_of_government_expenditure") + ">>>>>>>>>>>>>>>>>>");
     }
     public void putData(){
         Object [] theCountries = data.keySet().toArray();
@@ -83,6 +87,26 @@ public class StartJPanel extends javax.swing.JPanel {
         putData();
         putParams();
         this.parent = parent;
+    }
+	
+	//get data
+    public HashMap <String, HashMap <String, String>> getData(){
+        return data;
+    }
+    
+	//get parameter 1 as a string
+    public String getParam1(){
+        return param1;
+    }
+    
+	//get parameter 2 as a string
+    public String getParam2(){
+        return param2;
+    }
+
+	//get country as a string
+    public String getCountry(){
+        return country;
     }
 
     /**
@@ -184,14 +208,21 @@ public class StartJPanel extends javax.swing.JPanel {
         add(jLabel1);
         jLabel1.setBounds(-6, -6, 690, 540);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
-        
+	
+	    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        param1 = (String) jComboBox1.getSelectedItem();
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
-        // TODO add your handling code here:
+        String value = (String) jComboBox2.getSelectedItem();
+        if(!param1.equals(value)){
+            param2 = value;
+        }
     }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jComboBox3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox3ItemStateChanged
+        country = (String) jComboBox3.getSelectedItem();
+    }//GEN-LAST:event_jComboBox3ItemStateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String paramx = jComboBox1.getSelectedItem().toString();
