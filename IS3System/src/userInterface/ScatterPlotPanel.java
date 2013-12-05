@@ -61,8 +61,8 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
             paramx = "TeamSize";
          if(paramy.equals(""))
             paramy = "Bronze";
-         System.out.println("miny  " + minSlidery + " and maxy " + maxSlidery);
          g.setColor(Color.green);
+
          double scalex = calculateScaleValue(paramx);
          double scaley = calculateScaleValue(paramy);
          for(Entry csvEntry : csvData.entrySet()){
@@ -72,12 +72,13 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
              int yValue = 0;
              
              if( !tempX.equals("") )
-                xValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramx));
+                xValue = Integer.parseInt(tempX);
              if( !tempY.equals("") )
-                yValue = Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(paramy));
+                yValue = Integer.parseInt(tempY);
 
-             xValue*=scalex;
-             yValue*=scaley;
+              System.out.println("Paramx is " + xValue + "  and paramy is " + yValue);
+            // xValue*=scalex;
+            //yValue*=scaley;
              yValue = getSize().height - yValue;
              yValue -=5; 
              boolean ok = false;
@@ -89,7 +90,7 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
                 for(Point p : selected){
 
                   if(p.getX() == xValue && p.getY() == yValue){
-                        System.out.println(p.getX()  + "   "  + p.getY());
+                //        System.out.println(p.getX()  + "   "  + p.getY());
                        if( p.getSelected() == 1){
                             g.setColor(Color.red);  
                        }
