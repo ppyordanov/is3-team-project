@@ -5,6 +5,7 @@
 package userInterface;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -65,32 +66,36 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
 
          double scalex = calculateScaleValue(paramx);
          double scaley = calculateScaleValue(paramy);
+         drawGraphLines(g , scalex, scaley);
          for(Entry csvEntry : csvData.entrySet()){
              String tempX = ((HashMap<String,String>)csvEntry.getValue()).get(paramx);
              String tempY = ((HashMap<String,String>)csvEntry.getValue()).get(paramy);
-             int xValue = 0;
-             int yValue = 0;
+             int xValue = -1;
+             int yValue = -1;
              
-             if( !tempX.equals("") )
-                xValue = Integer.parseInt(tempX);
-             if( !tempY.equals("") )
-                yValue = Integer.parseInt(tempY);
 
-              System.out.println("Paramx is " + xValue + "  and paramy is " + yValue);
-            // xValue*=scalex;
-            //yValue*=scaley;
+                xValue = (int) getStringAsDouble(tempX);
+
+                yValue = (int) getStringAsDouble(tempY);
+
+             // System.out.println("Paramx is " + xValue + "  and paramy is " + yValue);
+              if(xValue < 0 || yValue < 0)
+                  continue;
+             xValue*=scalex;
+             yValue*=scaley;
+
              yValue = getSize().height - yValue;
              yValue -=5; 
              boolean ok = false;
              g.setColor(Color.green);
              if(xValue > maxSliderx*3 || xValue < minSliderx*3 || yValue <getSize().height - maxSlidery*3 || yValue > getSize().width- minSlidery*3){
                      g.setColor(Color.red);
+                 
                 }
              else
                 for(Point p : selected){
 
                   if(p.getX() == xValue && p.getY() == yValue){
-                //        System.out.println(p.getX()  + "   "  + p.getY());
                        if( p.getSelected() == 1){
                             g.setColor(Color.red);  
                        }
@@ -108,17 +113,67 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
 
          
     }
+    private void drawGraphLines(Graphics g, double scalex, double scaley){
+        g.setColor(Color.BLACK);
+        for(int i = 5; i < 300; i+=30){
+            double scaleValuex = (double) i / scalex;
+            double scaleValuey = (double) i / scaley;
+            
+            int scaleNumx = (int) scaleValuex;
+            int scaleNumy = (int) scaleValuey;
+            
+            String scaleStringx = "";
+            String scaleStringy = "";
+            
+            if(scaleNumx > 1000000){
+                scaleNumx /= 1000000;
+                scaleStringx = Integer.toString(scaleNumx);
+                scaleStringx+="M";
+            }
+            else scaleStringx = Integer.toString(scaleNumx);
+             g.drawString(scaleStringx, i, getSize().height - 5);
+             
+                         
+            if(scaleNumy > 1000000){
+                scaleNumy /= 1000000;
+                scaleStringy = Integer.toString(scaleNumy);
+                scaleStringy+="M";
+            }
+             else scaleStringy = Integer.toString(scaleNumy);
+            g.drawString(scaleStringy, 5, getSize().height - i);
+        }
+        g.drawLine(0, getSize().height/2, getSize().width, getSize().height/2);
+        g.drawLine(getSize().width/2, 0, getSize().width/2, getSize().height);
+       
+    }
+     private double getStringAsDouble(String temp){
+         double result = -1.0;
+         if(temp != null && !temp.equals("") && temp.length() < 10 && !temp.contains("E")){
+                temp = temp.replaceFirst(",", ".");
+                temp = temp.replaceAll(",", "");
+                result = Double.parseDouble(temp);
+         }
+         return result;
+         
+     }
+     
+     
      private double calculateScaleValue(String param){
          double scale = 0.0;
-         int paramSum = 0;
+         int paramMax = 0;
          int size = 0;
         for(Entry csvEntry : csvData.entrySet()){
             String temp = ((HashMap<String,String>)csvEntry.getValue()).get(param);
-            if( !temp.equals("") )
-                paramSum += Integer.parseInt(((HashMap<String,String>)csvEntry.getValue()).get(param));
-            size++;
+
+                double curParamDouble = getStringAsDouble(temp);
+                if(curParamDouble < 0) 
+                    continue;
+                int curParamVal = (int) curParamDouble; 
+                paramMax = Math.max(paramMax, curParamVal);
+                size++; 
+            
         }
-        scale = (double) (getSize().height/2) / (paramSum / size) ;
+        scale =(double) getSize().height / paramMax ;
          return scale;
      }
      public void setParamx(String px){
