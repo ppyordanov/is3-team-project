@@ -111,6 +111,9 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
             maxX_Slider.setValue(0);
             maxY_Slider.setValue(0);
             scatterPlotPanel.updateUI();
+            
+            DefaultTableModel dm = (DefaultTableModel) detailsTable.getModel();
+            dm.setRowCount(0);
         }
         else if(e.getSource().equals(helpButton)){
             HelpPage h = null;
