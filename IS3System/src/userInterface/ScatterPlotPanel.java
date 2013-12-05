@@ -203,6 +203,8 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
+        g.setBackground(Color.white);
+        g.clearRect(0, 0, getWidth(), getHeight());
         this.paint(g);
         
         try { 
@@ -281,15 +283,14 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
 
         plotInfoLabel.setBackground(new java.awt.Color(255, 255, 255));
         plotInfoLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        plotInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        plotInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(plotInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(plotInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
