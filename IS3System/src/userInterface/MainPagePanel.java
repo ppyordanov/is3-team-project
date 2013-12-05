@@ -11,11 +11,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -25,16 +30,15 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
     private IS3SystemUI parent;
     private JPanel previous;
-    private String paramx, paramy, country, continent;
+    private String paramx, paramy, country;
     private ScatterPlotPanel scatterPlotPanel;
     
-    public MainPagePanel(String paramx, String paramy, String country, String continent, HashMap<String, HashMap<String, String>> data) throws IOException{
+    public MainPagePanel(String paramx, String paramy, String country, HashMap<String, HashMap<String, String>> data) throws IOException{
         initComponents();
         
         this.paramx = paramx;
         this.paramy = paramy;
         this.country = country;
-        this.continent = continent;
         
         BufferedImage im = ImageIO.read(new File("TheWorld.jpg"));
         BackgroundPanel bg = new BackgroundPanel(im,0);
@@ -43,7 +47,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         bg.setVisible(true);
         
         //creating new scatterPlotPanel
-        scatterPlotPanel = new ScatterPlotPanel(this.paramx, this.paramy, this.country, data);
+        scatterPlotPanel = new ScatterPlotPanel(this.paramx, this.paramy, this.country, data, detailsTable);
         scatterPlotPanel.setSize(300, 300);
         scatterPlotPanel.setLocation(150,105);
         scatterPlotPanel.setVisible(true);
@@ -52,9 +56,22 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         this.add(bg);
         drawScatterPlot();
         
+        HashMap<String, String> columns = (HashMap<String, String>)data.get("Bulgaria");
+        Object []myColumns = new Object[columns.size()+1];
+        int i=0;
+        myColumns[i] = "Country";
+        
+        for(Entry clms: columns.entrySet()){
+            i++;
+            String column = (String)clms.getKey();
+            myColumns[i] = column;
+        }
+        
+        TableModel tm = new DefaultTableModel(myColumns,0);
+        detailsTable.setModel(tm);
+        
 	xAxisOption.addActionListener(this);
         yAxisOption.addActionListener(this);
-        continentBox.addActionListener(this);
         savePlotButton.addActionListener(this);
         clearButton.addActionListener(this);
         helpButton.addActionListener(this);
@@ -65,7 +82,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
      * Creates new form MainPagePanel
      */
     public MainPagePanel(IS3SystemUI myParent, JPanel prev, String px, String py, String country, HashMap<String, HashMap<String, String>> data) throws IOException {
-        this(px, py, country, "", data);
+        this(px, py, country, data);
         xAxisOption.setSelectedItem((Object)px);
         yAxisOption.setSelectedItem((Object)py);
         this.parent = myParent;
@@ -75,7 +92,6 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
     private void drawScatterPlot(){
       scatterPlotPanel.setParamx(paramx);
       scatterPlotPanel.setParamy(paramy);
-      scatterPlotPanel.setContinent(continent);
       scatterPlotPanel.setCountry(country);
       scatterPlotPanel.updateUI();
     }
@@ -140,12 +156,8 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
                 this.paramy = selectedItem;
                 scatterPlotPanel.setParamy(paramy);
             }
-            else if(cb.equals(continentBox)){
-                this.continent = selectedItem;
-                scatterPlotPanel.setContinent(continent);
-            }
         }
-    }
+    }// end of action performed
 
 
     /**
@@ -177,14 +189,12 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         maxLabelY = new javax.swing.JLabel();
         logoLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        detailsTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         countryTextBox = new javax.swing.JTextField();
         countryLabel = new javax.swing.JLabel();
         clearButton = new javax.swing.JButton();
         savePlotButton = new javax.swing.JButton();
-        continentLabel = new javax.swing.JLabel();
-        continentBox = new javax.swing.JComboBox();
         printDoneLabel = new javax.swing.JLabel();
 
         setAutoscrolls(true);
@@ -217,7 +227,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         maxX_Slider.setPaintLabels(true);
         maxX_Slider.setPaintTicks(true);
         maxX_Slider.setSnapToTicks(true);
-        maxX_Slider.setValue(0);
+        maxX_Slider.setValue(100);
         maxX_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 maxX_SliderStateChanged(evt);
@@ -265,7 +275,7 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
         maxY_Slider.setPaintLabels(true);
         maxY_Slider.setPaintTicks(true);
         maxY_Slider.setToolTipText("");
-        maxY_Slider.setValue(0);
+        maxY_Slider.setValue(100);
         maxY_Slider.setName(""); // NOI18N
         maxY_Slider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -331,18 +341,10 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/OlympicsImage.jpg"))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        detailsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        detailsTable.setMaximumSize(new java.awt.Dimension(0, 0));
+        detailsTable.setMinimumSize(new java.awt.Dimension(0, 0));
+        jScrollPane2.setViewportView(detailsTable);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -355,12 +357,6 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
 
         savePlotButton.setText("Save scatter plot");
 
-        continentLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        continentLabel.setForeground(new java.awt.Color(255, 255, 255));
-        continentLabel.setText("Continent:");
-
-        continentBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Africa", "America", "Asia", "Europe", "Oceania/Australia" }));
-
         printDoneLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         printDoneLabel.setForeground(new java.awt.Color(255, 255, 255));
         printDoneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -372,36 +368,25 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(savePlotButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(clearButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(countryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(continentLabel))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(continentBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(countryTextBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(printDoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(countryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(countryTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(printDoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(savePlotButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(countryLabel))
-                    .addComponent(countryTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(continentLabel))
-                    .addComponent(continentBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(countryTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(countryLabel))
+                .addGap(12, 12, 12)
                 .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(savePlotButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -540,15 +525,13 @@ public class MainPagePanel extends javax.swing.JPanel implements ActionListener{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JButton clearButton;
-    private javax.swing.JComboBox continentBox;
-    private javax.swing.JLabel continentLabel;
     private javax.swing.JLabel countryLabel;
     private javax.swing.JTextField countryTextBox;
     private javax.swing.JLabel detailsLabel;
+    private javax.swing.JTable detailsTable;
     private javax.swing.JButton helpButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel maxLabelX;
     private javax.swing.JLabel maxLabelY;

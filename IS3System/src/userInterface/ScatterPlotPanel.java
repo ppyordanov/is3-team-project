@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map.Entry;
 import javax.imageio.ImageIO;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,38 +24,29 @@ import javax.imageio.ImageIO;
  */
 public class ScatterPlotPanel extends javax.swing.JPanel {
 
-    public ArrayList<Point> selected;
-    public HashMap<String, HashMap<String, String>> csvData;
-    public String paramx, paramy, country, continent;
-    public int maxSliderx, maxSlidery, minSliderx,minSlidery;
+    private ArrayList<Point> selected;
+    private HashMap<String, HashMap<String, String>> csvData;
+    private String paramx, paramy, country;
+    private int maxSliderx, maxSlidery, minSliderx,minSlidery;
+    private JTable details;
+    
     /**
      * Creates new form ScatterPlotPanel
      */
-    public ScatterPlotPanel(String px, String py, String country, HashMap<String, HashMap<String, String>> data) {
+    public ScatterPlotPanel(String px, String py, String country, HashMap<String, HashMap<String, String>> data, JTable details) {
         initComponents();
         
         selected = new ArrayList<Point>();
         paramx = px;
         paramy = py;
         this.country = country;
-        maxSliderx = 0;
-        maxSlidery = 0;
+        maxSliderx = 100;
+        maxSlidery = 100;
         minSliderx = 0;
         minSlidery = 0;
         
         csvData = data;
-        /*HashMap<String, String> bulgariaValue = new HashMap<String, String>();
-        bulgariaValue.put("team size", "30");
-        bulgariaValue.put("medals", "3");
-        HashMap<String, String> chinaValue = new HashMap<String, String>();
-        chinaValue.put("team size", "233");
-        chinaValue.put("medals", "47");
-        HashMap<String, String> USAValue = new HashMap<String, String>();
-        USAValue.put("team size", "200");
-        USAValue.put("medals", "43");
-        csvData.put("China", chinaValue);
-        csvData.put("Bulgaria", bulgariaValue);
-        csvData.put("USA", USAValue);*/
+        this.details = details;
     }
 
      public void paintComponent(Graphics g){   
@@ -104,7 +97,7 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
                 }
              
              if(!ok)
-                    selected.add(new Point(xValue, yValue));
+                    selected.add(new Point(xValue, yValue, (String)csvEntry.getKey()));
     
              g.fillOval(xValue, yValue, 5, 5);
            
@@ -220,10 +213,7 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         
         return true;
      }
-     public void setContinent(String cntnt){
-         continent = cntnt;
-     }
-     
+
      public String getParamx(){
          return paramx;
      }
@@ -233,22 +223,22 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
      public String getCountry(){
          return country;
      }
-     public String getContinent(){
-         return continent;
-     }
      
      private class Point{
          int x,y,selected;
+         String name;
+         
          public Point(){
              x = y = 0;
          }
-         public Point(int x, int y){
+         public Point(int x, int y, String name){
              this.x = x;
              this.y = y;
+             this.name = name;
              selected = 0;
          }
-         public Point(int x, int y, int selected){
-             this(x,y);
+         public Point(int x, int y, int selected, String name){
+             this(x,y, name);
              this.selected = selected;
          }
          int getX(){
@@ -317,8 +307,24 @@ public class ScatterPlotPanel extends javax.swing.JPanel {
         for(Point p : selected){
             if(Math.abs(evntX - p.getX()) <= 7 && 
                Math.abs(evntY - p.getY()) <= 7){
-                if(p.getSelected() == 0)
+                if(p.getSelected() == 0){
                     p.setSelected(1);
+                    
+                    DefaultTableModel model = (DefaultTableModel) details.getModel();
+                    
+                    HashMap<String, String> items = (HashMap<String, String>)csvData.get(p.name);
+                    Object []row = new Object[items.size()+1];
+                    int i = 0;
+                    
+                    row[i] = p.name;
+                    for(Entry item: items.entrySet()){
+                        i++;
+                        String curItem = (String)item.getValue();
+                        row[i] = curItem;
+                    }
+                    
+                    model.addRow(row);
+                }
                 else
                     p.setSelected(0);
                 break;
